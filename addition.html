@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container"> 
+        <div class="card">
+            <h2>Addition</h2>
+          <div id="problem"></div>
+          <input type="number" id="answer">
+          <button id="submit">Submit</button>
+          <div id="result"></div>
+          <div class="buttons">
+            <button id="next">Next</button>
+            <button id="home">Home</button>
+          </div>
+        </div>
+      </div>
+
+  <script>
+    let currentProblem = {};
+
+function generateProblem() {
+  const num1 = Math.floor(Math.random() * 1000000);
+  const num2 = Math.floor(Math.random() * 1000000);
+  document.getElementById('problem').textContent = `${num1} + ${num2} = ?`;
+  currentProblem = { answer: num1 + num2 };
+}
+
+function checkAnswer() {
+  const userAnswer = parseInt(document.getElementById('answer').value);
+  const resultText = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
+  alert(resultText);
+}
+
+function clearFields() {
+  document.getElementById('answer').value = '';
+  document.getElementById('result').textContent = '';
+}
+
+document.getElementById('submit').addEventListener('click', checkAnswer);
+document.getElementById('next').addEventListener('click', () => {
+  clearFields();
+  generateProblem();
+});
+document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+
+generateProblem(); // Generate the first problem on load
+  </script>
+</body>
+</html>

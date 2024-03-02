@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+          <h2>Division</h2>
+          <div id="problem"></div>
+          <div class="inputs">
+            <label for="answer">Answer:</label>
+            <input type="number" id="answer">
+            <label for="remainder">Remainder:</label>
+            <input type="number" id="remainder">
+          </div>
+          <button id="submit">Submit</button>
+          <div id="result"></div>
+          <div class="buttons">
+            <button id="next">Next</button>
+            <button id="home">Home</button>
+          </div>
+        </div>
+      </div>
+
+  <script>
+    let currentProblem = {};
+
+function generateProblem() {
+  let divisor, dividend; 
+  
+    divisor = Math.floor(Math.random() * 90) + 10; // Between 10 and 99
+    dividend = Math.floor(Math.random() * 1000000); // Between 1000000 and 9999999
+
+  const problem = document.getElementById('problem');
+  problem.textContent = `${dividend} / ${divisor} = ?`;
+  currentProblem = { answer: Math.floor(dividend / divisor), remainder: dividend % divisor };
+  console.log(currentProblem);
+}
+
+function checkAnswer() {
+  const userAnswer = parseInt(document.getElementById('answer').value);
+  const userRemainder = parseInt(document.getElementById('remainder').value);
+
+  const correctRemainder = currentProblem.remainder; // Get stored remainder
+
+  document.getElementById('result').textContent = 
+    (userAnswer === currentProblem.answer && userRemainder === correctRemainder) ? 
+    alert("Correct!") : alert("Incorrect!");
+}
+
+function clearFields() {
+  document.getElementById('answer').value = '';
+  document.getElementById('result').textContent = '';
+}
+
+document.getElementById('submit').addEventListener('click', checkAnswer);
+document.getElementById('next').addEventListener('click', () => {
+  clearFields();
+  generateProblem();
+});
+document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+
+generateProblem(); // Generate the first problem on load
+  </script>
+</body>
+</html>
