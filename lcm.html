@@ -23,16 +23,12 @@
 let currentProblem = null; // Initialize currentProblem
 
 function generateProblem() {
-  let num1 = Math.floor(Math.random() * 100); // Replace with desired range
-  let num2 = Math.floor(Math.random() * 100); // Replace with desired range
+  let num1, num2;
 
-  // Ensure num1 and num2 are not co-prime to make LCM less than num1 * num2
-  if (gcd(num1, num2) === 1) {
-    // If num1 is not prime, increment num1 by 1
-    if (!isPrime(num1)) num1++;
-    // Otherwise, increment num2 by 1
-    else num2++;
-  }
+  do {
+    num1 = Math.floor(Math.random() * 100) + 1; // Ensure num1 is not 0
+    num2 = Math.floor(Math.random() * 100) + 1; // Ensure num2 is not 0
+  } while (gcd(num1, num2) === 1 || lcm(num1, num2) >= num1 * num2); // Ensure LCM is less than num1*num2 and they are not co-prime
 
   const problem = document.getElementById('problem');
   problem.textContent = `LCM of ${num1} and ${num2} = ?`;
@@ -49,16 +45,15 @@ function lcm(num1, num2) {
 
 // Define the gcd function
 function gcd(a, b) {
-  return !b ? a : gcd(b, a % b);
+  while (b !== 0) {
+    let temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
 }
 
-// Function to check if a number is prime (for numbers > 2)
-function isPrime(num) {
-  for (let i = 2; i <= Math.sqrt(num); i++) {
-    if (num % i === 0) return false;
-  }
-  return num > 1;
-}
+// Function to check if a number is prime (for numbers > 2) is no longer needed and has been removed
 
 
     function checkAnswer() {
