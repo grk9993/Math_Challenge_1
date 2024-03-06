@@ -30,6 +30,7 @@ function generateProblem() {
   const problem = document.getElementById('problem');
   problem.textContent = `${num1} - ${num2} = ?`;
   currentProblem = { num1, num2, answer: num1 - num2 };
+  console.log(currentProblem.answer);
 }
 
 function checkAnswer() {

@@ -7,8 +7,7 @@
 <body>
   <div class="container"> 
     <div class="card">
-      <h2>Multiplication</h2> 
-      <div id="problem"></div>
+      <h2>HCF</h2> <div id="problem"></div>
       <input type="number" id="answer">
       <button id="submit">Submit</button>
       <div id="result"></div>
@@ -19,20 +18,33 @@
     </div>
   </div>
 
-  <script>
-let currentProblem = {};
+  <script >
+    let currentProblem = null;
 
 function generateProblem() {
-  const num1 = Math.floor(Math.random() * 1000000);
-  const num2 = Math.floor(Math.random() * 890) + 100; 
-  document.getElementById('problem').textContent = `${num1} x ${num2} = ?`;
-  currentProblem = { answer: num1 * num2 };
+  const num1 = Math.floor(Math.random() * 1000); // Replace with desired range
+  const num2 = Math.floor(Math.random() * 1000); // Replace with desired range
+
+  const problem = document.getElementById('problem');
+  problem.textContent = `HCF of ${num1} and ${num2} = ?`; 
+
+  currentProblem = { num1, num2, answer: calculateHCF(num1, num2) }; 
   console.log(currentProblem.answer);
+}
+
+function calculateHCF(num1, num2) {
+  while (num2) { 
+    let t = num2; 
+    num2 = num1 % num2; 
+    num1 = t; 
+  }
+  return num1;
 }
 
 function checkAnswer() {
   const userAnswer = parseInt(document.getElementById('answer').value);
-  document.getElementById('result').textContent = userAnswer === currentProblem.answer ? alert("Correct!") : alert("Incorrect!");;
+  const resultText = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
+  alert(resultText);
 }
 
 function clearFields() {
@@ -48,6 +60,7 @@ document.getElementById('next').addEventListener('click', () => {
 document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
 
 generateProblem(); // Generate the first problem on load
-</script>
-</body>
+
+  </script> 
+  </body>
 </html>

@@ -27,6 +27,7 @@ function generateProblem() {
   const num2 = Math.floor(Math.random() * 1000000);
   document.getElementById('problem').textContent = `${num1} + ${num2} = ?`;
   currentProblem = { answer: num1 + num2 };
+  console.log(currentProblem.answer);
 }
 
 function checkAnswer() {
