@@ -20,28 +20,46 @@
   </div>
 
   <script>
-    let currentProblem = null; // Initialize currentProblem
+let currentProblem = null; // Initialize currentProblem
 
-    function generateProblem() {
-      const num1 = Math.floor(Math.random() * 100); // Replace with desired range
-      const num2 = Math.floor(Math.random() * 100); // Replace with desired range
+function generateProblem() {
+  let num1 = Math.floor(Math.random() * 100); // Replace with desired range
+  let num2 = Math.floor(Math.random() * 100); // Replace with desired range
 
-      const problem = document.getElementById('problem');
-      problem.textContent = `LCM of ${num1} and ${num2} = ?`; 
+  // Ensure num1 and num2 are not co-prime to make LCM less than num1 * num2
+  if (gcd(num1, num2) === 1) {
+    // If num1 is not prime, increment num1 by 1
+    if (!isPrime(num1)) num1++;
+    // Otherwise, increment num2 by 1
+    else num2++;
+  }
 
-      // Calculate the LCM
-      currentProblem = { num1, num2, answer: lcm(num1, num2) }; 
-      console.log(currentProblem.answer);
-    }
+  const problem = document.getElementById('problem');
+  problem.textContent = `LCM of ${num1} and ${num2} = ?`;
 
-    function lcm(num1, num2) {
-      // Define the gcd function within the scope of lcm
-      function gcd(a, b) {
-        return !b ? a : gcd(b, a % b);
-      }
-      // Use the gcd function to calculate the LCM
-      return (num1 * num2) / gcd(num1, num2);
-    }
+  // Calculate the LCM
+  currentProblem = { num1, num2, answer: lcm(num1, num2) };
+  console.log(currentProblem.answer);
+}
+
+function lcm(num1, num2) {
+  // Use the gcd function to calculate the LCM
+  return (num1 * num2) / gcd(num1, num2);
+}
+
+// Define the gcd function
+function gcd(a, b) {
+  return !b ? a : gcd(b, a % b);
+}
+
+// Function to check if a number is prime (for numbers > 2)
+function isPrime(num) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false;
+  }
+  return num > 1;
+}
+
 
     function checkAnswer() {
       const userAnswer = parseInt(document.getElementById('answer').value);

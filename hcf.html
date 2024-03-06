@@ -22,24 +22,29 @@
     let currentProblem = null;
 
 function generateProblem() {
-  const num1 = Math.floor(Math.random() * 1000); // Replace with desired range
-  const num2 = Math.floor(Math.random() * 1000); // Replace with desired range
+  let num1, num2, hcf;
+  do {
+    num1 = Math.floor(Math.random() * 1000) + 1; // Ensure non-zero
+    num2 = Math.floor(Math.random() * 1000) + 1; // Ensure non-zero
+    hcf = calculateHCF(num1, num2);
+  } while (hcf <= 10); // Repeat until HCF is greater than 10
 
   const problem = document.getElementById('problem');
-  problem.textContent = `HCF of ${num1} and ${num2} = ?`; 
+  problem.textContent = `HCF of ${num1} and ${num2} = ?`;
 
-  currentProblem = { num1, num2, answer: calculateHCF(num1, num2) }; 
+  currentProblem = { num1, num2, answer: hcf };
   console.log(currentProblem.answer);
 }
 
 function calculateHCF(num1, num2) {
-  while (num2) { 
-    let t = num2; 
-    num2 = num1 % num2; 
-    num1 = t; 
+  while (num2) {
+    let t = num2;
+    num2 = num1 % num2;
+    num1 = t;
   }
   return num1;
 }
+
 
 function checkAnswer() {
   const userAnswer = parseInt(document.getElementById('answer').value);
