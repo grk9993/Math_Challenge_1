@@ -28,7 +28,7 @@ function generateProblem() {
   do {
     num1 = Math.floor(Math.random() * 100) + 1; // Ensure num1 is not 0
     num2 = Math.floor(Math.random() * 100) + 1; // Ensure num2 is not 0
-  } while (gcd(num1, num2) === 1 || lcm(num1, num2) >= num1 * num2); // Ensure LCM is less than num1*num2 and they are not co-prime
+  } while (gcd(num1, num2) === 1 || lcm(num1, num2) >= num1 * num2 || isPrime(num1) || isPrime(num2) || lcm(num1, num2) === num1 || lcm(num1, num2) === num2); // Ensure LCM is less than num1*num2 and they are not co-prime   also num1 and num2 should not be prime, lcm should not equal num1 or num2 
 
   const problem = document.getElementById('problem');
   problem.textContent = `LCM of ${num1} and ${num2} = ?`;
@@ -36,6 +36,13 @@ function generateProblem() {
   // Calculate the LCM
   currentProblem = { num1, num2, answer: lcm(num1, num2) };
   console.log(currentProblem.answer);
+}
+
+function isPrime(num) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false;
+  }
+  return num > 1;
 }
 
 function lcm(num1, num2) {

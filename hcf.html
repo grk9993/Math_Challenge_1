@@ -24,16 +24,23 @@
 function generateProblem() {
   let num1, num2, hcf;
   do {
-    num1 = Math.floor(Math.random() * 1000) + 1; // Ensure non-zero
-    num2 = Math.floor(Math.random() * 1000) + 1; // Ensure non-zero
+    num1 = Math.floor(Math.random() * 300) + 1; // Ensure non-zero
+    num2 = Math.floor(Math.random() * 300) + 1; // Ensure non-zero
     hcf = calculateHCF(num1, num2);
-  } while (hcf <= 10); // Repeat until HCF is greater than 10
+  } while (hcf <= 10 || isPrime(hcf) || hcf === num1 || hcf === num2 || hcf >99); // Repeat until HCF is greater than 10 and HCF is not a prime number also HCF is not equal to num1 or num2
 
   const problem = document.getElementById('problem');
   problem.textContent = `HCF of ${num1} and ${num2} = ?`;
 
   currentProblem = { num1, num2, answer: hcf };
   console.log(currentProblem.answer);
+}
+
+function isPrime(num) {
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) return false;
+  }
+  return num > 1;
 }
 
 function calculateHCF(num1, num2) {
