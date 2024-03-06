@@ -26,7 +26,7 @@
 let currentProblem = null;
 
 function generateProblem() {
-  let whole1, num1, den1, whole2, num2, den2,newNum1 , newNum2;
+  let whole1, num1, den1, whole2, num2, den2,newNum1 , newNum2 , newNum3;
   do {
     whole1 = Math.floor(Math.random() * 9) + 1;
     num1 = Math.floor(Math.random() * 8) + 1; 
@@ -39,7 +39,9 @@ function generateProblem() {
     const lcm = findLCM(den1, den2);
     const newNum1 = (whole1 * den1 + num1) * (lcm / den1);
     const newNum2 = (whole2 * den2 + num2) * (lcm / den2);
-  } while (num1 <= num2 || den1 === 1 || den2 === 1 || (newNum1 - newNum2) <= 0);
+    const newNum3 = (newNum1 - newNum2);
+    console.log("Num1 is "+newNum1, "Num2 is "+newNum2 + "  num1-num2 is "+ newNum3);
+  } while (num1 <= num2 || den1 === 1 || den2 === 1 || newNum3 <= 0 || (whole1-whole2) <= 0);
 
   const problemString = `${whole1}(${num1}/${den1}) - ${whole2}(${num2}/${den2}) = ?`;
   document.getElementById('problem').textContent = problemString;
