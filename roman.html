@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <div class="container"> 
+    <div class="card">
+      <h2>Roman Numbers</h2>
+      <div id="problem"></div>
+      <input type="text" id="answer">
+      <button id="submit">Submit</button>
+      <div id="result"></div>
+      <div class="buttons">
+        <button id="next">Next</button>
+        <button id="home">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script>    
+    const romanNumerals = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+    const equivalents = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    let currentAnswer = ''; // Moved outside to be accessible by checkAnswer
+
+    function generateProblem() {
+      let num = Math.floor(Math.random() * 3000) + 1; // Numbers 1-3000
+      document.getElementById('problem').textContent = `Convert to Roman: ${num}`;
+      let roman = '';
+      romanNumerals.forEach((numeral, index) => {
+        while (num >= equivalents[index]) {
+          roman += numeral;
+          num -= equivalents[index];
+        }
+      });
+
+      
+      currentAnswer = roman; // Store the generated Roman numeral as the current answer
+      console.log(currentAnswer); // Print the answer in the console
+    }
+
+    document.getElementById('submit').addEventListener('click', () => {
+      const userAnswer = document.getElementById('answer').value.toUpperCase();
+      alert(userAnswer === currentAnswer ? "Correct!" : "Incorrect!");
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      document.getElementById('answer').value = '';
+      generateProblem();
+    });
+
+    document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+
+    generateProblem(); // Generate the first problem on load
+  </script>
+</body>
+</html>

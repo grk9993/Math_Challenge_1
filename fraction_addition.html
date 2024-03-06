@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <div class="container"> 
+    <div class="card">
+      <h2>Fraction Addition</h2> 
+      <div id="problem"></div>
+
+      <div class="inputs"> 
+        Answer: <input type="number" id="answerWhole"> + <input type="number" id="answerNum"> / <input type="number" id="answerDen"> 
+      </div>
+      <button id="submit">Submit</button>
+      <div id="result"></div>
+      <div class="buttons">
+        <button id="next">Next</button>
+        <button id="home">Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script >
+    let currentProblem = null;
+
+function generateProblem() {
+  const whole1 = Math.floor(Math.random() * 9) + 1; // Whole number range 1-9
+  const num1 = Math.floor(Math.random() * 8) + 1; // Numerator range 1-8
+  const den1 = Math.floor(Math.random() * 7) + 2; // Denominator range 2-8, ensuring it's never 1
+  const whole2 = Math.floor(Math.random() * 9) + 1;
+  const num2 = Math.floor(Math.random() * 8) + 1;
+  const den2 = Math.floor(Math.random() * 7) + 2;  // Denominator range 2-8, ensuring it's never 1
+
+  document.getElementById('problem').textContent = 
+        `${whole1}(${num1}/${den1}) + ${whole2}(${num2}/${den2}) = ?`;
+
+  currentProblem = { 
+      frac1: { whole: whole1, num: num1, den: den1 },
+      frac2: { whole: whole2, num: num2, den: den2 }
+  };
+
+  calculateAnswer(); // Calculate the answer right away
+}
+
+function calculateAnswer() {
+  const lcm = findLCM(currentProblem.frac1.den, currentProblem.frac2.den);
+  const newNum1 = (currentProblem.frac1.whole * currentProblem.frac1.den + currentProblem.frac1.num) * (lcm / currentProblem.frac1.den);
+  const newNum2 = (currentProblem.frac2.whole * currentProblem.frac2.den + currentProblem.frac2.num) * (lcm / currentProblem.frac2.den);
+  const resultNum = newNum1 + newNum2;
+  const resultWhole = Math.floor(resultNum / lcm);
+  const resultNumFinal = resultNum % lcm;
+  const resultDen = lcm;
+
+  currentProblem.answer = { whole: resultWhole, num: simplifyFraction(resultNumFinal, resultDen).num, den: simplifyFraction(resultNumFinal, resultDen).den }; // Simplify
+  console.log(currentProblem.answer);
+}
+
+function simplifyFraction(num, den) {
+  for (let gcd = den; gcd > 1; gcd--) {
+    if (num % gcd === 0 && den % gcd === 0) {
+      return { num: num / gcd, den: den / gcd };
+    }
+  }
+  return { num, den }; // Return original numbers if no common divisor found
+}
+
+function findGCD(a, b) {
+  while (b !== 0) {
+    let temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+}
+
+function findLCM(a, b) {
+  return (a / findGCD(a, b)) * b;
+}
+
+function checkAnswer() {
+  const userWhole = parseInt(document.getElementById('answerWhole').value);
+  const userNum = parseInt(document.getElementById('answerNum').value);
+  const userDen = parseInt(document.getElementById('answerDen').value);
+  const resultText = (userWhole === currentProblem.answer.whole && userNum === currentProblem.answer.num && userDen === currentProblem.answer.den) ? "Correct!" : "Incorrect!";
+  alert(resultText);
+}
+
+function clearFields() {
+  document.getElementById('answerWhole').value = '';
+  document.getElementById('answerNum').value = '';
+  document.getElementById('answerDen').value = '';
+  document.getElementById('result').textContent = '';
+}
+
+document.getElementById('submit').addEventListener('click', checkAnswer);
+document.getElementById('next').addEventListener('click', () => {
+  clearFields();
+  generateProblem();
+});
+document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+
+generateProblem(); // Generate the first problem on load
+
+  </script>
+   </body>
+</html>
