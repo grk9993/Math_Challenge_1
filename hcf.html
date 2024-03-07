@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-
+  <script src="rest_request.js"></script>
   <script >
     let currentProblem = null;
 
@@ -33,6 +33,7 @@ function generateProblem() {
   problem.textContent = `HCF of ${num1} and ${num2} = ?`;
 
   currentProblem = { num1, num2, answer: hcf };
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   console.log(currentProblem.answer);
 }
 
@@ -56,6 +57,7 @@ function calculateHCF(num1, num2) {
 function checkAnswer() {
   const userAnswer = parseInt(document.getElementById('answer').value);
   const resultText = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
+  submitProblemData(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(), userAnswer.toString(), resultText);
   alert(resultText);
 }
 

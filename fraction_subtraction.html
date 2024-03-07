@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-
+  <script src="rest_request.js"></script>
   <script> 
 let currentProblem = null;
 
@@ -41,7 +41,7 @@ function generateProblem() {
     const newNum2 = (whole2 * den2 + num2) * (lcm / den2);
     const newNum3 = (newNum1 - newNum2);
     console.log("Num1 is "+newNum1, "Num2 is "+newNum2 + "  num1-num2 is "+ newNum3);
-  } while (num1 <= num2 || den1 === 1 || den2 === 1 || newNum3 <= 0 || (whole1-whole2) <= 0);
+  } while (num1 <= num2 || den1 === 1 || den2 === 1 || newNum3 <= 0 || (whole1-whole2) <= 0||num1>den1||num2>den2);
 
   const problemString = `${whole1}(${num1}/${den1}) - ${whole2}(${num2}/${den2}) = ?`;
   document.getElementById('problem').textContent = problemString;
@@ -51,7 +51,7 @@ function generateProblem() {
     frac2: { whole: whole2, num: num2, den: den2 },
     lcm: findLCM(den1, den2) // Store LCM for reuse
   };
-
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   calculateAnswer(); 
   console.log(currentProblem.answer);
 }
@@ -81,6 +81,8 @@ function checkAnswer() {
 
   const {whole, num, den} = currentProblem.answer;
   const resultText = (userWhole === whole && userNum === num && userDen === den) ? "Correct!" : "Incorrect!";
+  currentProblem.remark = resultText;
+  submitProblemDataMath(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.whole.toString(), currentProblem.answer.num.toString(), currentProblem.answer.den.toString(), userWhole.toString(), userNum.toString(), userDen.toString(), currentProblem.remark)
   alert(resultText);
 }
 

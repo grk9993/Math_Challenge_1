@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-
+  <script src="rest_request.js"></script>
   <script >
     let currentProblem = null;
 
@@ -42,6 +42,7 @@ function generateProblem() {
   };
 
   calculateAnswer(); // Calculate the answer right away
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
 
 function calculateAnswer() {
@@ -84,6 +85,8 @@ function checkAnswer() {
   const userNum = parseInt(document.getElementById('answerNum').value);
   const userDen = parseInt(document.getElementById('answerDen').value);
   const resultText = (userWhole === currentProblem.answer.whole && userNum === currentProblem.answer.num && userDen === currentProblem.answer.den) ? "Correct!" : "Incorrect!";
+  submitProblemDataMath(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.whole.toString(), currentProblem.answer.num.toString(), currentProblem.answer.den.toString(), userWhole.toString(), userNum.toString(), userDen.toString(), resultText)
+
   alert(resultText);
 }
 

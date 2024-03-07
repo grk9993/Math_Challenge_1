@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-
+  <script src="rest_request.js"></script>
   <script>
     let currentProblem = {};
 
@@ -36,6 +36,7 @@ function generateProblem() {
   const problem = document.getElementById('problem');
   problem.textContent = `${dividend} / ${divisor} = ?`;
   currentProblem = { answer: Math.floor(dividend / divisor), remainder: dividend % divisor };
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   console.log(currentProblem);
 }
 
@@ -48,6 +49,8 @@ function checkAnswer() {
   document.getElementById('result').textContent = 
     (userAnswer === currentProblem.answer && userRemainder === correctRemainder) ? 
     alert("Correct!") : alert("Incorrect!");
+    currentProblem.remark = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
+    submitProblemDataMath(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(),currentProblem.remainder.toString(),'', userAnswer.toString(),userRemainder.toString(),'', currentProblem.remark)
 }
 
 function clearFields() {

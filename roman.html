@@ -18,15 +18,20 @@
       </div>
     </div>
   </div>
-
+  <script src="rest_request.js"></script>
   <script>    
     const romanNumerals = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
     const equivalents = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
     let currentAnswer = ''; // Moved outside to be accessible by checkAnswer
-
+    let currentProblem = null;
     function generateProblem() {
       let num = Math.floor(Math.random() * 3000) + 1; // Numbers 1-3000
       document.getElementById('problem').textContent = `Convert to Roman: ${num}`;
+      currentProblem = {
+        uid: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+        question: `Convert to Roman: ${num}`,
+       
+      };
       let roman = '';
       romanNumerals.forEach((numeral, index) => {
         while (num >= equivalents[index]) {
@@ -37,11 +42,15 @@
 
       
       currentAnswer = roman; // Store the generated Roman numeral as the current answer
+      currentProblem.correct_ans1 = roman;
       console.log(currentAnswer); // Print the answer in the console
     }
 
     document.getElementById('submit').addEventListener('click', () => {
       const userAnswer = document.getElementById('answer').value.toUpperCase();
+      currentProblem.user_ans1=userAnswer
+      currentProblem.remark = userAnswer === currentAnswer ? "Correct!" : "Incorrect!";
+      submitProblemData(currentProblem.uid, currentProblem.question, currentProblem.correct_ans1, currentProblem.user_ans1, currentProblem.remark)
       alert(userAnswer === currentAnswer ? "Correct!" : "Incorrect!");
     });
 

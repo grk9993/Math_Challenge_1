@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-
+  <script src="rest_request.js"></script>
   <script>
     let currentProblem = {};
 
@@ -30,12 +30,19 @@ function generateProblem() {
   const problem = document.getElementById('problem');
   problem.textContent = `${num1} - ${num2} = ?`;
   currentProblem = { num1, num2, answer: num1 - num2 };
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   console.log(currentProblem.answer);
 }
 
 function checkAnswer() {
   const userAnswer = parseInt(document.getElementById('answer').value);
   const resultText = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
+  submitProblemData(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(), userAnswer.toString(), resultText)
+  .then(response => response.json())
+  .then(data => console.log('Success:', data))
+  .catch((error) => {
+    console.error('Error:', error);
+  });
   alert(resultText);
 }
 
