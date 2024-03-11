@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <div class="container"> 
+    <div class="card">
+      <h2>Percentage Calculation</h2>
+      <div id="problem"></div>
+      <label for="answer">Whole number:</label>
+      <input type="text" id="answer">
+      <button id="submit">Submit</button>
+      <div id="result"></div>
+      <div class="buttons">
+        <button id="next">Next</button>
+        <button id="home">Home</button>
+      </div>
+    </div>
+  </div>
+  <script src="rest_request.js"></script>
+  <script>    
+    let currentAnswer = '';
+    let currentProblem = null;
+
+    function generateProblem() {
+      let wholeNumber = Math.floor(Math.random() * 900) + 100; // 3 digit whole number
+      let percentage = Math.floor(Math.random() * 95) + 2; // Percentage 2-97 
+      let answer = (wholeNumber * percentage) / 100; // Calculate the percentage of the whole number
+
+      if (Number.isInteger(answer)) {
+        document.getElementById('problem').textContent = `What is ${percentage}% of ${wholeNumber}?`;
+        currentProblem = {
+          uid: Math.random().toString(36).substring(2, 15),
+          question: `What is ${percentage}% of ${wholeNumber}?`,
+          correct_ans1: answer.toString(),
+        };
+        
+        currentAnswer = answer.toString(); // Store the calculated answer as the current answer
+        console.log(currentAnswer); // Print the answer in the console
+      } else {
+        generateProblem(); // Recursively generate a new problem if the answer isn't a whole number
+      }
+    }
+
+    function submitAnswer() {
+      const userAnswer = document.getElementById('answer').value;
+      currentProblem.user_ans1 = userAnswer;
+      currentProblem.remark = userAnswer === currentAnswer ? "Correct!" : "Incorrect!";
+      submitProblemData(currentProblem.uid, currentProblem.question, currentProblem.correct_ans1, currentProblem.user_ans1, currentProblem.remark);
+      alert(currentProblem.remark);
+    }
+
+    function setupEventListeners() {
+      document.getElementById('submit').addEventListener('click', submitAnswer);
+      document.getElementById('next').addEventListener('click', () => {
+        document.getElementById('answer').value = '';
+        generateProblem();
+      });
+      document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+    }
+
+    setupEventListeners();
+    generateProblem(); // Generate the first problem on load
+  </script>
+</body>
+</html>

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Test</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6e6fa; /* Lavender background for a softer look */
+        }
+        .card {
+            box-shadow: 0 5px 15px 0 rgba(0,0,0,0.4); /* Deeper shadow for more depth */
+            transition: 0.3s;
+            border-radius: 10px; /* Slightly more rounded corners for a softer look */
+            padding: 25px;
+            margin: 25px;
+            background-color: #ffefd5; /* Peach puff background for warmth */
+        }
+        .card:hover {
+            box-shadow: 0 10px 20px 0 rgba(0,0,0,0.6); /* Even deeper shadow on hover for a popping effect */
+            transform: scale(1.05); /* Slightly scale cards on hover for an interactive feel */
+        }
+        h1 {
+            color: #9370db; /* Medium purple color for a more vibrant heading */
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2.5em; /* Larger font size for the heading */
+        }
+        button {
+            background-color: #32cd32; /* Lime green background for a lively button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px; /* Rounded corners for the button */
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #228b22; /* Darker shade of green on hover for depth */
+            transform: scale(1.1); /* Scale button on hover for an interactive feel */
+        }
+    </style>
+</head>
+<body>
+    <h1>Surprise Test</h1>
+    <div id="questionsContainer"></div>
+
+    <script>
+        const questionsData = [
+    {
+        "id": "q1",
+        "question": "Question 1: What is the value of the digit '5' in the number 1,562?",
+        "answer": "The value of '5' is 500."
+    },
+    {
+        "id": "q2",
+        "question": "Question 2: Arrange the following numbers in ascending order: 345, 512, 289, 431.",
+        "answer": "Ascending order: 289, 345, 431, 512."
+    },
+    {
+        "id": "q4",
+        "question": "Question 4: If you have 2,345 apples and you give away 1,234, how many apples do you have left?",
+        "answer": "Answer: You have 1,111 apples left."
+    },
+    {
+        "id": "q5",
+        "question": "Question 5: Multiply 123 by 4.",
+        "answer": "Answer: ( 123 times 4 = 492 )."
+    },
+    {
+        "id": "q6",
+        "question": "Question 6: Subtract 432 from 980.",
+        "answer": "Answer: ( 980 - 432 = 548 )."
+    },
+    {
+        "id": "q7",
+        "question": "Question 7: What is the product of 123 and 7?",
+        "answer": "Answer: ( 123 times 7 = 861 )."
+    },
+    {
+        "id": "q8",
+        "question": "Question 8: Divide 144 by 12.",
+        "answer": "Answer: ( 144 div 12 = 12 )."
+    },
+    {
+        "id": "q9",
+        "question": "Question 9: If you have 5 bags with 10 apples in each, how many apples do you have in total?",
+        "answer": "Answer: ( 5 times 10 = 50 ) apples."
+    },
+    {
+        "id": "q10",
+        "question": "Question 10: What number do you get when you add the numbers 21, 13, and 16?",
+        "answer": "Answer: ( 21 + 13 + 16 = 50 )."
+    },
+    {
+        "id": "q11",
+        "question": "Question 11: How many tens are there in 320?",
+        "answer": "Answer: There are ( 32 ) tens in 320."
+    },
+    {
+        "id": "q12",
+        "question": "Question 12: If a book costs ₹ 45, how much would 4 books cost?",
+        "answer": "Answer: ( 4 times 45 = ₹ 180 )."
+    },
+    {
+        "id": "q13",
+        "question": "Question 13: What is the remainder when you divide 199 by 5?",
+        "answer": "Answer: The remainder is ( 199 mod 5 = 4 )."
+    },
+    {
+        "id": "q14",
+        "question": "Question 14: If a train travels 60 kilometers in one hour, how far will it travel in 3 hours?",
+        "answer": "Answer: ( 60 times 3 = 180 ) kilometers."
+    },
+    {
+        "id": "q15",
+        "question": "Question 15: What is the difference between the largest two-digit number and the smallest three-digit number?",
+        "answer": "Answer: ( 100 - 99 = 1 )."
+    },
+    {
+        "id": "q16",
+        "question": "Question 16: What is the sum of 123 and 456?",
+        "answer": "Answer: ( 123 + 456 = 579 )."
+    },
+    {
+        "id": "q17",
+        "question": "Question 17: If you divide 800 by 4, what do you get?",
+        "answer": "Answer: ( 800 div 4 = 200 )."
+    },
+    {
+        "id": "q18",
+        "question": "Question 18: What is 7 times 8?",
+        "answer": "Answer: ( 7 times 8 = 56 )."
+    },
+    {
+        "id": "q19",
+        "question": "Question 19: Subtract 65 from 100.",
+        "answer": "Answer: ( 100 - 65 = 35 )."
+    },
+    {
+        "id": "q20",
+        "question": "Question 20: What number do you get when you multiply 12 by 9?",
+        "answer": "Answer: ( 12 times 9 = 108 )."
+    },
+    {
+        "id": "q21",
+        "question": "Question 21: How many hundreds are there in 2500?",
+        "answer": "Answer: There are ( 25 ) hundreds in 2500."
+    },
+    {
+        "id": "q22",
+        "question": "Question 22: If a car travels 60 km in one hour, how far will it travel in 2.5 hours?",
+        "answer": "Answer: ( 60 times 2.5 = 150 ) km."
+    },
+    {
+        "id": "q23",
+        "question": "Question 23: What is the difference between 500 and 123?",
+        "answer": "Answer: ( 500 - 123 = 377 )."
+    },
+    {
+        "id": "q24",
+        "question": "Question 24: If you buy 5 chocolates for ₹ 10 each, how much do you spend in total?",
+        "answer": "Answer: ( 5 times 10 = ₹ 50 )."
+    },
+    {
+        "id": "q25",
+        "question": "Question 25: What is the remainder when you divide 99 by 4?",
+        "answer": "Answer: The remainder is ( 99 mod 4 = 3 )."
+    },
+    {
+        "id": "q26",
+        "question": "Question 26: Count by threes from 3 to 30.",
+        "answer": "Answer: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30."
+    },
+    {
+        "id": "q27",
+        "question": "Question 27: Write the number that comes 5 before 84.",
+        "answer": "Answer: 79."
+    },
+    {
+        "id": "q28",
+        "question": "Question 28: Sonali collected 52 seashells. Her brother collected 27. How many did they collect together?",
+        "answer": "Answer: ( 52 + 27 = 79 ) seashells."
+    },
+    {
+        "id": "q29",
+        "question": "Question 29: Subtract 38 from 65.",
+        "answer": "Answer: ( 65 - 38 = 27 )."
+    },
+    {
+        "id": "q30",
+        "question": "Question 30: What is the sum of 24, 19, and 8?",
+        "answer": "Answer: ( 24 + 19 + 8 = 51 )."
+    },
+    {
+        "id": "q31",
+        "question": "Question 31: Multiply 9 by 6.",
+        "answer": "Answer: ( 9 times 6 = 54 )."
+    },
+    {
+        "id": "q32",
+        "question": "Question 32: Share 20 stickers equally among 4 children. How many does each child get?",
+        "answer": "Answer: Each child gets ( 20 div 4 = 5 ) stickers."
+    },
+    {
+        "id": "q33",
+        "question": "Question 33: Write this number in words: 9,517.",
+        "answer": "Answer: Nine thousand five hundred seventeen."
+    },
+    {
+        "id": "q34",
+        "question": "Question 34: Arrange in ascending order: 36, 81, 25, 4.",
+        "answer": "Answer: 4, 25, 36, 81."
+    },
+    {
+        "id": "q35",
+        "question": "Question 35: Which is smaller: 463 or 436?",
+        "answer": "Answer: 436 is smaller than 463."
+    },
+    {
+        "id": "q36",
+        "question": "Question 36: A shopkeeper sold 258 oranges on Monday and 139 on Tuesday. How many oranges did he sell altogether?",
+        "answer": "Answer: ( 258 + 139 = 397 ) oranges."
+    },
+    {
+        "id": "q37",
+        "question": "Question 37: Riya has ₹ 250. She buys a toy for ₹ 125. How much money is left?",
+        "answer": "Answer: Riya has ( ₹ 250 - ₹ 125 = ₹ 125 ) left."
+    },
+    {
+        "id": "q38",
+        "question": "Question 38: Each basket can hold 8 apples. If there are 5 baskets, how many apples are there in total?",
+        "answer": "Answer: There are ( 8 times 5 = 40 ) apples in total."
+    },
+    {
+        "id": "q39",
+        "question": "Question 39: It takes 45 minutes to bake cookies. If they start baking at 11:00 AM, when will the cookies be done?",
+        "answer": "Answer: The cookies will be done at 11:45 AM."
+    },
+    {
+        "id": "q40",
+        "question": "Question 40: A pen costs ₹ 12 and a pencil costs ₹ 7. What is the total cost of buying 1 pen and 1 pencil?",
+        "answer": "Answer: The total cost is ( ₹ 12 + ₹ 7 = ₹ 19 )."
+    },
+    {
+        "id": "q41",
+        "question": "Question 41: A farmer plants 7 rows of carrots with 5 carrots in each row. How many carrots in total?",
+        "answer": "Answer: There are ( 7 times 5 = 35 ) carrots in total."
+    },
+    {
+        "id": "q42",
+        "question": "Question 42: There are 6 boxes of chocolates. Each box has 7 chocolates. How many chocolates in total?",
+        "answer": "Answer: There are ( 6 times 7 = 42 ) chocolates in total."
+    },
+    {
+        "id": "q43",
+        "question": "Question 43: What time is it 30 minutes after 9:45 AM?",
+        "answer": "Answer: It is 10:15 AM."
+    },
+    {
+        "id": "q44",
+        "question": "Question 44: If 1 week has 7 days, how many days are there in 3 weeks?",
+        "answer": "Answer: There are ( 3 times 7 = 21 ) days in 3 weeks."
+    },
+    {
+        "id": "q45",
+        "question": "Question 45: There are 8 flowers in a vase. How many flowers would be in 4 vases?",
+        "answer": "Answer: There would be ( 8 times 4 = 32 ) flowers in 4 vases."
+    },
+    {
+        "id": "q46",
+        "question": "Question 46: How many sides does a pentagon have?",
+        "answer": "Answer: A pentagon has 5 sides."
+    },
+    {
+        "id": "q47",
+        "question": "Question 47: Is a ball a square, a circle, or a sphere?",
+        "answer": "Answer: A ball is a sphere."
+    },
+    {
+        "id": "q48",
+        "question": "Question 48: Draw a rectangle and label its length and breadth.",
+        "answer": "Answer: Please refer to a geometry textbook or resource for illustrations."
+    },
+    {
+        "id": "q49",
+        "question": "Question 49: What shape has only 3 sides?",
+        "answer": "Answer: A shape with only 3 sides is called a triangle."
+    },
+    {
+        "id": "q50",
+        "question": "Question 50: Name two objects in your classroom that are shaped like a cube.",
+        "answer": "Answer: Examples of cube-shaped objects could be a dice or a Rubik's cube."
+    },
+    {
+        "id": "q51",
+        "question": "Question 51: Rani has 23 marbles and Rohan has 17 marbles. How many marbles do they have together?",
+        "answer": "Answer: ( 23 + 17 = 40 ) marbles."
+    },
+    {
+        "id": "q52",
+        "question": "Question 52: There are 45 mangoes on a tree. If 12 fall down, how many mangoes are left on the tree?",
+        "answer": "Answer: ( 45 - 12 = 33 ) mangoes are left on the tree."
+    },
+    {
+        "id": "q53",
+        "question": "Question 53: The bus has 38 seats. If 15 seats are occupied, how many seats are empty?",
+        "answer": "Answer: ( 38 - 15 = 23 ) seats are empty."
+    },
+    {
+        "id": "q54",
+        "question": "Question 54: Write the following number in words: 7,021.",
+        "answer": "Answer: Seven thousand twenty-one."
+    },
+    {
+        "id": "q55",
+        "question": "Question 55: Find the sum of 48 and 29.",
+        "answer": "Answer: ( 48 + 29 = 77 )."
+    },
+    {
+        "id": "q56",
+        "question": "Question 56: Subtract 14 from 56.",
+        "answer": "Answer: ( 56 - 14 = 42 )."
+    },
+    {
+        "id": "q57",
+        "question": "Question 57: Multiply 7 by 8.",
+        "answer": "Answer: ( 7 times 8 = 56 )."
+    },
+    {
+        "id": "q58",
+        "question": "Question 58: Divide 36 by 4. What is the quotient?",
+        "answer": "Answer: ( 36 div 4 = 9 )."
+    },
+    {
+        "id": "q59",
+        "question": "Question 59: Arrange the following numbers in ascending order: 23, 18, 41, 9.",
+        "answer": "Answer: 9, 18, 23, 41."
+    },
+    {
+        "id": "q60",
+        "question": "Question 60: Arrange the following numbers in descending order: 54, 72, 38, 11.",
+        "answer": "Answer: 72, 54, 38, 11."
+    },
+    {
+        "id": "q61",
+        "question": "Question 61: There are 125 people in a queue. If 47 leave, how many people are remaining?",
+        "answer": "Answer: ( 125 - 47 = 78 ) people."
+    },
+    {
+        "id": "q62",
+        "question": "Question 62: Rohan buys a notebook for ₹ 28 and a pen for ₹ 15. What is the total cost?",
+        "answer": "Answer: ( ₹ 28 + ₹ 15 = ₹ 43 )."
+    },
+    {
+        "id": "q63",
+        "question": "Question 63: Meena has ₹ 342. She spends ₹ 187. How much money does she have left?",
+        "answer": "Answer: ( ₹ 342 - ₹ 187 = ₹ 155 )."
+    },
+    {
+        "id": "q64",
+        "question": "Question 64: The train departs at 8:15 AM and arrives at 11:40 AM. How long is the journey (in hours and minutes)?",
+        "answer": "Answer: The journey is 3 hours and 25 minutes long."
+    },
+    {
+        "id": "q65",
+        "question": "Question 65: A farmer harvests 258 apples on Monday and 179 apples on Tuesday. How many apples does he harvest in total?",
+        "answer": "Answer: ( 258 + 179 = 437 ) apples."
+    },
+    {
+        "id": "q66",
+        "question": "Question 66: If 1 mango tree gives 18 mangoes, how many mangoes do 5 trees give?",
+        "answer": "Answer: ( 5 times 18 = 90 ) mangoes."
+    },
+    {
+        "id": "q67",
+        "question": "Question 67: There are 7 rows of chairs, and each row has 6 chairs. How many chairs are there in total?",
+        "answer": "Answer: ( 7 times 6 = 42 ) chairs."
+    },
+    {
+        "id": "q68",
+        "question": "Question 68: A bakery sells 24 cupcakes each day for a week (7 days). How many cupcakes do they sell in a week?",
+        "answer": "Answer: ( 24 times 7 = 168 ) cupcakes."
+    },
+    {
+        "id": "q69",
+        "question": "Question 69: There are 8 pigeons on a branch. If 3 more pigeons come, how many pigeons will be there in total?",
+        "answer": "Answer: ( 8 + 3 = 11 ) pigeons."
+    },
+    {
+        "id": "q70",
+        "question": "Question 70: A box contains 9 chocolates. If Riya buys 4 boxes, how many chocolates does she have?",
+        "answer": "Answer: ( 4 times 9 = 36 ) chocolates."
+    },
+    {
+        "id": "q71",
+        "question": "Question 71: How many sides does a square have?",
+        "answer": "Answer: A square has 4 sides."
+    },
+    {
+        "id": "q72",
+        "question": "Question 72: Draw a circle and label its center point 'O'.",
+        "answer": "Answer: Please refer to a geometry textbook or resource for illustrations."
+    },
+    {
+        "id": "q73",
+        "question": "Question 73: What comes after half past 2?",
+        "answer": "Answer: 2:35 or thirty-five minutes past 2."
+    },
+    {
+        "id": "q74",
+        "question": "Question 74: If 1 hour has 60 minutes, how many minutes are there in 3 hours?",
+        "answer": "Answer: ( 3 times 60 = 180 ) minutes."
+    },
+    {
+        "id": "q75",
+        "question": "Question 75: Colour the following shapes: red for a square, blue for a triangle, and yellow for a circle.",
+        "answer": "Answer: Please use coloring materials to color the shapes as instructed."
+    }, 
+    
+    {
+        "id": "q76",
+        "question": "Question 76: Subtract 58 from 136 and divide the result by 3.",
+        "answer": "Answer: ( frac{136 - 58}{3} = 26 )."
+    },
+    {
+        "id": "q77",
+        "question": "Question 77: Multiply 17 by 5 and then add 40.",
+        "answer": "Answer: ( 17 times 5 + 40 = 125 )."
+    },
+    {
+        "id": "q78",
+        "question": "Question 78: Divide 250 by 10 and subtract 5.",
+        "answer": "Answer: ( frac{250}{10} - 5 = 20 )."
+    },
+    {
+        "id": "q79",
+        "question": "Question 79: If you have 4 dozens of bananas, how many bananas do you have?",
+        "answer": "Answer: ( 4 times 12 = 48 ) bananas."
+    },
+    {
+        "id": "q80",
+        "question": "Question 80: What is the product of 8 and 9?",
+        "answer": "Answer: ( 8 times 9 = 72 )."
+    },
+    {
+        "id": "q81",
+        "question": "Question 81: Find the sum of 123 and 321.",
+        "answer": "Answer: ( 123 + 321 = 444 )."
+    },
+    {
+        "id": "q82",
+        "question": "Question 82: What is the total value of five ₹50 notes?",
+        "answer": "Answer: ( 5 times 50 = ₹250 )."
+    },
+    {
+        "id": "q83",
+        "question": "Question 83: If a pencil costs ₹7, how much would 10 pencils cost?",
+        "answer": "Answer: ( 10 times 7 = ₹70 )."
+    },
+    {
+        "id": "q84",
+        "question": "Question 84: What is 1/4th of 200?",
+        "answer": "Answer: ( frac{1}{4} times 200 = 50 )."
+    },
+    {
+        "id": "q85",
+        "question": "Question 85: If you save ₹5 every day, how much will you save in a week?",
+        "answer": "Answer: ( 5 times 7 = ₹35 )."
+    },
+    {
+        "id": "q86",
+        "question": "Question 86: What is the difference between 500 and 299?",
+        "answer": "Answer: ( 500 - 299 = 201 )."
+    },
+    {
+        "id": "q87",
+        "question": "Question 87: If a car travels 70 km in an hour, how far will it travel in 2.5 hours?",
+        "answer": "Answer: ( 70 times 2.5 = 175 ) kilometers."
+    },
+    {
+        "id": "q88",
+        "question": "Question 88: What number is obtained by adding 111 to 222?",
+        "answer": "Answer: ( 111 + 222 = 333 )."
+    },
+    {
+        "id": "q89",
+        "question": "Question 89: How many ₹20 coins are there in ₹400?",
+        "answer": "Answer: ( frac{400}{20} = 20 ) coins."
+    },
+    {
+        "id": "q90",
+        "question": "Question 90: If you divide 180 by 9, what is the quotient?",
+        "answer": "Answer: ( frac{180}{9} = 20 )."
+    },
+    {
+        "id": "q91",
+        "question": "Question 91: What is the remainder when you divide 365 by 7?",
+        "answer": "Answer: The remainder is ( 365 mod 7 = 2 )."
+    },
+    {
+        "id": "q92",
+        "question": "Question 92: If a chocolate costs ₹15, how much would 12 chocolates cost?",
+        "answer": "Answer: ( 12 times 15 = ₹180 )."
+    },
+    {
+        "id": "q93",
+        "question": "Question 93: What is the sum of the first 10 even numbers?",
+        "answer": "Answer: ( 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20 = 110 )."
+    },
+    {
+        "id": "q94",
+        "question": "Question 94: If a cycle has 2 wheels, how many wheels do 5 cycles have?",
+        "answer": "Answer: ( 5 times 2 = 10 ) wheels."
+    },
+    {
+        "id": "q95",
+        "question": "Question 95: Subtract 222 from 555.",
+        "answer": "Answer: ( 555 - 222 = 333 )."
+    },
+    {
+        "id": "q96",
+        "question": "Question 96: If you have 3 ₹100 notes, 5 ₹50 notes, and 2 ₹10 notes, what is the total amount?",
+        "answer": "Answer: ( 3 times 100 + 5 times 50 + 2 times 10 = ₹600 )."
+    },
+    {
+        "id": "q97",
+        "question": "Question 97: What is the largest two-digit prime number?",
+        "answer": "Answer: The largest two-digit prime number is 97."
+    },
+    {
+        "id": "q98",
+        "question": "Question 98: If a square has a side length of 8 cm, what is its perimeter?",
+        "answer": "Answer: ( 4 times 8 = 32 ) cm."
+    },
+    {
+        "id": "q99",
+        "question": "Question 99: What is the area of a rectangle with length 15 cm and width 10 cm?",
+        "answer": "Answer: ( 15 times 10 = 150 ) cm²."
+    },
+    {
+        "id": "q100",
+        "question": "Question 100: If you multiply 25 by 4 and then subtract 50, what is the result?",
+        "answer": "Answer: ( 25 times 4 - 50 = 50 )."
+    },
+
+    {
+        "id": "q101",
+        "question": "Question 101: If you buy 3 ice creams for ₹15 each, how much do you pay in total?",
+        "answer": "Answer: ( 3 times 15 = ₹45 )."
+    },
+    {
+        "id": "q102",
+        "question": "Question 102: What is the next prime number after 37?",
+        "answer": "Answer: The next prime number after 37 is 41."
+    },
+    {
+        "id": "q103",
+        "question": "Question 103: If a rectangle's length is twice its width and the width is 5 cm, what is the rectangle's perimeter?",
+        "answer": "Answer: ( 2 times (5 + 2 times 5) = 30 ) cm."
+    },
+    {
+        "id": "q104",
+        "question": "Question 104: How many quarters are there in ₹100?",
+        "answer": "Answer: ( 4 times 100 = 400 ) quarters."
+    },
+    {
+        "id": "q105",
+        "question": "Question 105: What is 7% of 200?",
+        "answer": "Answer: ( 0.07 times 200 = 14 )."
+    },
+    {
+        "id": "q106",
+        "question": "Question 106: If you subtract 25 from 100, how many times can you do it?",
+        "answer": "Answer: ( frac{100}{25} = 4 ) times."
+    },
+    {
+        "id": "q107",
+        "question": "Question 107: What is the sum of all odd numbers from 1 to 15?",
+        "answer": "Answer: ( 1 + 3 + 5 + 7 + 9 + 11 + 13 + 15 = 64 )."
+    },
+    {
+        "id": "q108",
+        "question": "Question 108: If a train travels 90 kilometers in 1.5 hours, what is its speed in km/h?",
+        "answer": "Answer: ( 90/1.5 = 60 ) km/h."
+    },
+    {
+        "id": "q109",
+        "question": "Question 109: What is the largest three-digit number divisible by 3?",
+        "answer": "Answer: The largest three-digit number divisible by 3 is 999."
+    },
+    {
+        "id": "q110",
+        "question": "Question 110: If you have 5 ₹10 notes and 8 ₹5 coins, what is the total amount?",
+        "answer": "Answer: ( 5 times 10 + 8 times 5 = ₹90 )."
+    },
+    {
+        "id": "q111",
+        "question": "Question 111: What is the area of a square with a side of 12 cm?",
+        "answer": "Answer: ( 12 times 12 = 144 ) cm²."
+    },
+    {
+        "id": "q112",
+        "question": "Question 112: If you divide 360 by 12, what is the quotient?",
+        "answer": "Answer: ( 360/12 = 30 )."
+    },
+    {
+        "id": "q113",
+        "question": "Question 113: How many ₹2 coins make up ₹50?",
+        "answer": "Answer: ( 50/2 = 25 ) coins."
+    },
+    {
+        "id": "q114",
+        "question": "Question 114: If a chocolate bar costs ₹25, how much would 7 bars cost?",
+        "answer": "Answer: ( 7 times 25 = ₹175 )."
+    },
+    {
+        "id": "q115",
+        "question": "Question 115: What is the remainder when you divide 400 by 9?",
+        "answer": "Answer: The remainder is ( 400 mod 9 = 4 )."
+    },
+    {
+        "id": "q116",
+        "question": "Question 116: If a car travels 65 km in 1 hour, how far will it travel in 4 hours?",
+        "answer": "Answer: ( 65 times 4 = 260 ) kilometers."
+    },
+    {
+        "id": "q117",
+        "question": "Question 117: What is the difference between the smallest four-digit number and the largest three-digit number?",
+        "answer": "Answer: ( 1000 - 999 = 1 )."
+    },
+    {
+        "id": "q118",
+        "question": "Question 118: Multiply 14 by 6 and then add 28.",
+        "answer": "Answer: ( 14 times 6 + 28 = 112 )."
+    },
+    {
+        "id": "q119",
+        "question": "Question 119: If you have 3 quarters, how much money do you have?",
+        "answer": "Answer: ( 3 times 25 = ₹75 )."
+    },
+    {
+        "id": "q120",
+        "question": "Question 120: What is the product of 12 and 11?",
+        "answer": "Answer: ( 12 times 11 = 132 )."
+    },
+    {
+        "id": "q121",
+        "question": "Question 121: Find the sum of 234 and 432.",
+        "answer": "Answer: ( 234 + 432 = 666 )."
+    },
+    {
+        "id": "q122",
+        "question": "Question 122: What is the total value of six ₹20 notes?",
+        "answer": "Answer: ( 6 times 20 = ₹120 )."
+    },
+    {
+        "id": "q123",
+        "question": "Question 123: If a pen costs ₹8, how much would 12 pens cost?",
+        "answer": "Answer: ( 12 times 8 = ₹96 )."
+    },
+    {
+        "id": "q124",
+        "question": "Question 124: What is 1/3rd of 300?",
+        "answer": "Answer: ( 1/3 times 300 = 100 )."
+    },
+    {
+        "id": "q125",
+        "question": "Question 125: If you save ₹10 every day, how much will you save in a month (30 days)?",
+        "answer": "Answer: ( 10 times 30 = ₹300 )."
+    },
+    {
+        "id": "q126",
+        "question": "Question 126: If a basket holds 10 apples, how many apples are in 7 baskets?",
+        "answer": "Answer: ( 10 times 7 = 70 ) apples."
+    },
+    {
+        "id": "q127",
+        "question": "Question 127: What is the sum of 45 and 55?",
+        "answer": "Answer: ( 45 + 55 = 100 )."
+    },
+    {
+        "id": "q128",
+        "question": "Question 128: Subtract 67 from 134 and then divide by 3.",
+        "answer": "Answer: ( frac{134 - 67}{3} = 22.33 )."
+    },
+    {
+        "id": "q129",
+        "question": "Question 129: Multiply 12 by 4 and then subtract 18.",
+        "answer": "Answer: ( 12 times 4 - 18 = 30 )."
+    },
+    {
+        "id": "q130",
+        "question": "Question 130: If you have 5 dozens of eggs, how many eggs do you have?",
+        "answer": "Answer: ( 5 times 12 = 60 ) eggs."
+    },
+    {
+        "id": "q131",
+        "question": "Question 131: What is the product of 7 and 8?",
+        "answer": "Answer: ( 7 times 8 = 56 )."
+    },
+    {
+        "id": "q132",
+        "question": "Question 132: Find the sum of 234 and 432.",
+        "answer": "Answer: ( 234 + 432 = 666 )."
+    },
+    {
+        "id": "q133",
+        "question": "Question 133: What is the total value of five ₹10 notes?",
+        "answer": "Answer: ( 5 times 10 = ₹50 )."
+    },
+    {
+        "id": "q134",
+        "question": "Question 134: If a pen costs ₹8, how much would 15 pens cost?",
+        "answer": "Answer: ( 15 times 8 = ₹120 )."
+    },
+    {
+        "id": "q135",
+        "question": "Question 135: What is 1/2 of 400?",
+        "answer": "Answer: ( frac{1}{2} times 400 = 200 )."
+    },
+    {
+        "id": "q136",
+        "question": "Question 136: If you save ₹10 every day, how much will you save in a week?",
+        "answer": "Answer: ( 10 times 7 = ₹70 )."
+    },
+    {
+        "id": "q137",
+        "question": "Question 137: What is the difference between 800 and 299?",
+        "answer": "Answer: ( 800 - 299 = 501 )."
+    },
+    {
+        "id": "q138",
+        "id": "q138",
+        "question": "Question 138: If a car travels 80 km in an hour, how far will it travel in 2 hours?",
+        "answer": "Answer: ( 80 times 2 = 160 ) kilometers."
+    },
+    {
+        "id": "q139",
+        "question": "Question 139: What number is obtained by adding 123 to 321?",
+        "answer": "Answer: ( 123 + 321 = 444 )."
+    },
+    {
+        "id": "q140",
+        "question": "Question 140: How many ₹5 coins are there in ₹100?",
+        "answer": "Answer: ( frac{100}{5} = 20 ) coins."
+    },
+    {
+        "id": "q141",
+        "question": "Question 141: If you divide 360 by 6, what is the quotient?",
+        "answer": "Answer: ( frac{360}{6} = 60 )."
+    },
+    {
+        "id": "q142",
+        "question": "Question 142: What is the remainder when you divide 500 by 6?",
+        "answer": "Answer: The remainder is ( 500 mod 6 = 2 )."
+    },
+    {
+        "id": "q143",
+        "question": "Question 143: If a chocolate costs ₹20, how much would 10 chocolates cost?",
+        "answer": "Answer: ( 10 times 20 = ₹200 )."
+    },
+    {
+        "id": "q144",
+        "question": "Question 144: What is the sum of the first 5 prime numbers?",
+        "answer": "Answer: ( 2 + 3 + 5 + 7 + 11 = 28 )."
+    },
+    {
+        "id": "q145",
+        "question": "Question 145: If a bicycle has 2 wheels, how many wheels do 6 bicycles have?",
+        "answer": "Answer: ( 6 times 2 = 12 ) wheels."
+    },
+    {
+        "id": "q146",
+        "question": "Question 146: Subtract 123 from 456.",
+        "answer": "Answer: ( 456 - 123 = 333 )."
+    },
+    {
+        "id": "q147",
+        "question": "Question 147: If you have 2 ₹100 notes, 3 ₹50 notes, and 5 ₹20 notes, what is the total amount?",
+        "answer": "Answer: ( 2 times 100 + 3 times 50 + 5 times 20 = ₹400 )."
+    },
+    {
+        "id": "q148",
+        "question": "Question 148: What is the smallest two-digit prime number?",
+        "answer": "Answer: The smallest two-digit prime number is 11."
+    },
+    {
+        "id": "q149",
+        "question": "Question 149: If a square has a side length of 9 cm, what is its perimeter?",
+        "answer": "Answer: ( 4 times 9 = 36 ) cm."
+    },
+    {
+        "id": "q150",
+        "question": "Question 150: What is the area of a rectangle with length 20 cm and width 15 cm?",
+        "answer": "Answer: ( 20 times 15 = 300 ) cm²."
+    },
+    {
+        "id": "q151",
+        "question": "Question 151: If a shirt costs ₹200, how much would 3 shirts cost?",
+        "answer": "Answer: ( 3 times 200 = ₹600 )."
+    },
+    {
+        "id": "q152",
+        "question": "Question 152: What is the next odd number after 79?",
+        "answer": "Answer: The next odd number after 79 is 81."
+    },
+    {
+        "id": "q153",
+        "question": "Question 153: If a rectangle's length is three times its width and the width is 4 cm, what is the rectangle's area?",
+        "answer": "Answer: ( 3 times 4 times 4 = 48 ) cm²."
+    },
+    {
+        "id": "q154",
+        "question": "Question 154: How many halves are there in 100?",
+        "answer": "Answer: ( 2 times 100 = 200 ) halves."
+    },
+    {
+        "id": "q155",
+        "question": "Question 155: What is 15% of 500?",
+        "answer": "Answer: ( 0.15 times 500 = 75 )."
+    },
+    {
+        "id": "q156",
+        "question": "Question 156: If you subtract 50 from 200, how many times can you do it?",
+        "answer": "Answer: ( 200/50 = 4 ) times."
+    },
+    {
+        "id": "q157",
+        "question": "Question 157: What is the sum of all even numbers from 2 to 16?",
+        "answer": "Answer: ( 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 = 72 )."
+    },
+    {
+        "id": "q158",
+        "question": "Question 158: If a train travels 120 kilometers in 2 hours, what is its speed in km/h?",
+        "answer": "Answer: ( 120/2 = 60 ) km/h."
+    },
+    {
+        "id": "q159",
+        "question": "Question 159: What is the smallest three-digit number divisible by 4?",
+        "answer": "Answer: The smallest three-digit number divisible by 4 is 100."
+    },
+    {
+        "id": "q160",
+        "question": "Question 160: If you have 6 ₹5 notes and 10 ₹2 coins, what is the total amount?",
+        "answer": "Answer: ( 6 times 5 + 10 times 2 = ₹50 )."
+    },
+    {
+        "id": "q161",
+        "question": "Question 161: What is the area of a square with a side of 10 cm?",
+        "answer": "Answer: ( 10 times 10 = 100 ) cm²."
+    },
+    {
+        "id": "q162",
+        "question": "Question 162: If you divide 420 by 7, what is the quotient?",
+        "answer": "Answer: ( 420/7 = 60 )."
+    },
+    {
+        "id": "q163",
+        "question": "Question 163: How many ₹1 coins make up ₹25?",
+        "answer": "Answer: ( 25 times 1 = ₹25 )."
+    },
+    {
+        "id": "q164",
+        "question": "Question 164: If a candy bar costs ₹10, how much would 8 bars cost?",
+        "answer": "Answer: ( 8 times 10 = ₹80 )."
+    },
+    {
+        "id": "q165",
+        "question": "Question 165: What is the remainder when you divide 250 by 7?",
+        "answer": "Answer: The remainder is ( 250 mod 7 = 5 )."
+    },
+    {
+        "id": "q166",
+        "question": "Question 166: If a bike travels 40 km in 1 hour, how far will it travel in 5 hours?",
+        "answer": "Answer: ( 40 times 5 = 200 ) kilometers."
+    },
+    {
+        "id": "q167",
+        "question": "Question 167: What is the difference between the largest three-digit number and the smallest four-digit number?",
+        "answer": "Answer: ( 1000 - 999 = 1 )."
+    },
+    {
+        "id": "q168",
+        "question": "Question 168: Multiply 15 by 7 and then add 35.",
+        "answer": "Answer: ( 15 times 7 + 35 = 140 )."
+    },
+    {
+        "id": "q169",
+        "question": "Question 169: If you have 4 dimes, how much money do you have?",
+        "answer": "Answer: ( 4 times 10 = ₹40 )."
+    },
+    {
+        "id": "q170",
+        "question": "Question 170: What is the product of 13 and 9?",
+        "answer": "Answer: ( 13 times 9 = 117 )."
+    },
+    {
+        "id": "q171",
+        "question": "Question 171: Find the sum of 123 and 456.",
+        "answer": "Answer: ( 123 + 456 = 579 )."
+    },
+    {
+        "id": "q172",
+        "question": "Question 172: What is the total value of seven ₹10 notes?",
+        "answer": "Answer: ( 7 times 10 = ₹70 )."
+    },
+    {
+        "id": "q173",
+        "question": "Question 173: If a notebook costs ₹12, how much would 9 notebooks cost?",
+        "answer": "Answer: ( 9 times 12 = ₹108 )."
+    },
+    {
+        "id": "q174",
+        "question": "Question 174: What is 1/5th of 500?",
+        "answer": "Answer: ( 1/5 times 500 = 100 )."
+    },
+    {
+        "id": "q175",
+        "question": "Question 175: If you save ₹20 every day, how much will you save in a month (30 days)?",
+        "answer": "Answer: ( 20 times 30 = ₹600 )."
+    },
+    {
+        "id": "q176",
+        "question": "Question 176: What is 20% of ₹500?",
+        "answer": "Answer: ( 20% times ₹500 = ₹100 )."
+    },
+    {
+        "id": "q177",
+        "question": "Question 177: If a shopkeeper sells a pen for ₹110 that was bought for ₹100, what is the profit percentage?",
+        "answer": "Answer: Profit % = ( frac{Profit}{Cost Price} times 100 = frac{₹10}{₹100} times 100 = 10% )."
+    },
+    {
+        "id": "q178",
+        "question": "Question 178: A dress is sold for ₹540 after a discount of 10%. What was the original price?",
+        "answer": "Answer: Original Price = ( frac{Sale Price}{1 - Discount %} = frac{₹540}{1 - 0.10} = ₹600 )."
+    },
+    {
+        "id": "q179",
+        "question": "Question 179: If you lose 15% of your money which was ₹200, how much money is left?",
+        "answer": "Answer: Remaining Money = ( ₹200 - 15% times ₹200 = ₹200 - ₹30 = ₹170 )."
+    },
+    {
+        "id": "q180",
+        "question": "Question 180: A toy car is marked at ₹250 and sold at a 20% discount. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹250 - 20% times ₹250 = ₹250 - ₹50 = ₹200 )."
+    },
+    {
+        "id": "q181",
+        "question": "Question 181: Ravi bought a book for ₹320 and sold it at a loss of 5%. How much did he sell it for?",
+        "answer": "Answer: Sale Price = ( Cost Price - Loss = ₹320 - 5% times ₹320 = ₹320 - ₹16 = ₹304 )."
+    },
+    {
+        "id": "q182",
+        "question": "Question 182: A shopkeeper gains a 25% profit by selling a shirt for ₹500. What was the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Sale Price}{1 + Profit %} = frac{₹500}{1 + 0.25} = ₹400 )."
+    },
+    {
+        "id": "q183",
+        "question": "Question 183: An item was sold for ₹675 at a 10% profit. What was the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Sale Price}{1 + Profit %} = frac{₹675}{1 + 0.10} = ₹613.64 )."
+    },
+    {
+        "id": "q184",
+        "question": "Question 184: A retailer offers a 15% discount on a fan marked at ₹1500. What is the discount amount?",
+        "answer": "Answer: Discount Amount = ( 15% times ₹1500 = ₹225 )."
+    },
+    {
+        "id": "q185",
+        "question": "Question 185: A shopkeeper sells a mobile phone at a profit of ₹200 which is 25% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹200}{0.25} = ₹800 )."
+    },
+    {
+        "id": "q186",
+        "question": "Question 186: If a pair of shoes is sold for ₹900 after giving a discount of 10%, what was the marked price?",
+        "answer": "Answer: Marked Price = ( frac{Sale Price}{1 - Discount %} = frac{₹900}{1 - 0.10} = ₹1000 )."
+    },
+    {
+        "id": "q187",
+        "question": "Question 187: A shopkeeper sells a watch at a loss of ₹50 which is 20% of its selling price. What is the selling price?",
+        "answer": "Answer: Selling Price = ( frac{Loss}{Loss %} = frac{₹50}{0.20} = ₹250 )."
+    },
+    {
+        "id": "q188",
+        "question": "Question 188: A trader marks his goods up by 40% and then gives a discount of 10%. What is the effective percentage increase in price?",
+        "answer": "Answer: Effective Increase = ( Mark Up % - Discount % = 40% - 10% = 30% )."
+    },
+    {
+        "id": "q189",
+        "question": "Question 189: A man bought a cycle for ₹1200 and sold it at a loss of 15%. At what price did he sell the cycle?",
+        "answer": "Answer: Sale Price = ( Cost Price - Loss = ₹1200 - 15% times ₹1200 = ₹1200 - ₹180 = ₹1020 )."
+    },
+    {
+        "id": "q190",
+        "question": "Question 190: A fruit seller had 300 apples. He sold 40% of them on the first day. How many apples are left?",
+        "answer": "Answer: Apples Left = ( Total Apples - Sold Apples = 300 - 40% times 300 = 300 - 120 = 180 ) apples."
+    },
+    {
+        "id": "q191",
+        "question": "Question 191: A book is sold for ₹360 after a discount of 20%. What is the original price of the book?",
+        "answer": "Answer: Original Price = ( frac{Sale Price}{1 - Discount %} = frac{₹360}{1 - 0.20} = ₹450 )."
+    },
+    {
+        "id": "q192",
+        "question": "Question 192: A shopkeeper sells a bag at a profit of ₹80 which is 10% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹80}{0.10} = ₹800 )."
+    },
+    {
+        "id": "q193",
+        "question": "Question 193: A retailer bought a cooler for ₹2500 and sold it at a 20% profit. At what price did he sell the cooler?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹2500 + 20% times ₹2500 = ₹2500 + ₹500 = ₹3000 )."
+    },
+    {
+        "id": "q194",
+        "question": "Question 194: A shopkeeper sells a laptop at a loss of ₹1500 which is 12% of its selling price. What is the selling price?",
+        "answer": "Answer: Selling Price = ( frac{Loss}{Loss %} = frac{₹1500}{0.12} = ₹12500 )."
+    },
+    {
+        "id": "q195",
+        "question": "Question 195: A man bought a chair for ₹800 and sold it at a profit of 25%. At what price did he sell the chair?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹800 + 25% times ₹800 = ₹800 + ₹200 = ₹1000 )."
+    },
+    {
+        "id": "q196",
+        "question": "Question 196: A shopkeeper gives a discount of 5% on a TV marked at ₹20000. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹20000 - 5% times ₹20000 = ₹20000 - ₹1000 = ₹19000 )."
+    },
+    {
+        "id": "q197",
+        "question": "Question 197: A retailer bought goods worth ₹1500 and wants to make a profit of 30%. At what price should he sell the goods?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹1500 + 30% times ₹1500 = ₹1500 + ₹450 = ₹1950 )."
+    },
+    {
+        "id": "q198",
+        "question": "Question 198: A man sold his bike at a loss of 10%. If the selling price was ₹9000, what was the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Sale Price}{1 - Loss %} = frac{₹9000}{1 - 0.10} = ₹10000 )."
+    },
+    {
+        "id": "q199",
+        "question": "Question 199: A shopkeeper sells a toy at a profit of ₹120 which is 15% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹120}{0.15} = ₹800 )."
+    },
+    {
+        "id": "q201",
+        "question": "Question 201: If an item is sold for ₹750 after a 25% discount, what was its original price?",
+        "answer": "Answer: Original Price = ( frac{Sale Price}{1 - Discount %} = frac{₹750}{1 - 0.25} = ₹1000 )."
+    },
+    {
+        "id": "q202",
+        "question": "Question 202: A shopkeeper sells a jacket at a profit of ₹300 which is 20% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹300}{0.20} = ₹1500 )."
+    },
+    {
+        "id": "q203",
+        "question": "Question 203: A retailer bought a fan for ₹1200 and sold it at a 15% profit. At what price did he sell the fan?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹1200 + 15% times ₹1200 = ₹1200 + ₹180 = ₹1380 )."
+    },
+    {
+        "id": "q204",
+        "question": "Question 204: A shopkeeper sells a toy at a loss of ₹120 which is 15% of its selling price. What is the selling price?",
+        "answer": "Answer: Selling Price = ( frac{Loss}{Loss %} = frac{₹120}{0.15} = ₹800 )."
+    },
+    {
+        "id": "q205",
+        "question": "Question 205: A man bought a table for ₹2000 and sold it at a profit of 10%. At what price did he sell the table?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹2000 + 10% times ₹2000 = ₹2000 + ₹200 = ₹2200 )."
+    },
+    {
+        "id": "q206",
+        "question": "Question 206: A shopkeeper gives a discount of 5% on a TV marked at ₹15000. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹15000 - 5% times ₹15000 = ₹15000 - ₹750 = ₹14250 )."
+    },
+    {
+        "id": "q207",
+        "question": "Question 207: A retailer bought goods worth ₹2500 and wants to make a profit of 25%. At what price should he sell the goods?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹2500 + 25% times ₹2500 = ₹2500 + ₹625 = ₹3125 )."
+    },
+    {
+        "id": "q208",
+        "question": "Question 208: A man sold his scooter at a loss of 5%. If the selling price was ₹9500, what was the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Sale Price}{1 - Loss %} = frac{₹9500}{1 - 0.05} = ₹10000 )."
+    },
+    {
+        "id": "q209",
+        "question": "Question 209: A shopkeeper sells a bag at a profit of ₹150 which is 10% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹150}{0.10} = ₹1500 )."
+    },
+    {
+        "id": "q210",
+        "question": "Question 210: A retailer offers a 30% discount on a book marked at ₹500. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹500 - 30% times ₹500 = ₹500 - ₹150 = ₹350 )."
+    },
+    {
+        "id": "q211",
+        "question": "Question 211: A man bought a bicycle for ₹3000 and sold it at a profit of 20%. At what price did he sell the bicycle?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹3000 + 20% times ₹3000 = ₹3000 + ₹600 = ₹3600 )."
+    },
+    {
+        "id": "q212",
+        "question": "Question 212: A shopkeeper sells a laptop at a loss of ₹2000 which is 10% of its selling price. What is the selling price?",
+        "answer": "Answer: Selling Price = ( frac{Loss}{Loss %} = frac{₹2000}{0.10} = ₹20000 )."
+    },
+    {
+        "id": "q213",
+        "question": "Question 213: A retailer bought a microwave for ₹4000 and sold it at a 25% profit. At what price did he sell the microwave?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹4000 + 25% times ₹4000 = ₹4000 + ₹1000 = ₹5000 )."
+    },
+    {
+        "id": "q214",
+        "question": "Question 214: A shopkeeper sells a camera at a profit of ₹500 which is 20% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹500}{0.20} = ₹2500 )."
+    },
+    {
+        "id": "q215",
+        "question": "Question 215: A man bought a fridge for ₹20000 and sold it at a loss of 10%. At what price did he sell the fridge?",
+        "answer": "Answer: Sale Price = ( Cost Price - Loss = ₹20000 - 10% times ₹20000 = ₹20000 - ₹2000 = ₹18000 )."
+    },
+    {
+        "id": "q216",
+        "question": "Question 216: A shopkeeper gives a discount of 10% on a computer marked at ₹25000. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹25000 - 10% times ₹25000 = ₹25000 - ₹2500 = ₹22500 )."
+    },
+    {
+        "id": "q217",
+        "question": "Question 217: A retailer bought a washing machine for ₹15000 and wants to make a profit of 20%. At what price should he sell the washing machine?",
+        "answer": "Answer: Sale Price = ( Cost Price + Profit = ₹15000 + 20% times ₹15000 = ₹15000 + ₹3000 = ₹18000 )."
+    },
+    {
+        "id": "q218",
+        "question": "Question 218: A man sold his bike at a profit of 15%. If the selling price was ₹11500, what was the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Sale Price}{1 + Profit %} = frac{₹11500}{1 + 0.15} = ₹10000 )."
+    },
+    {
+        "id": "q219",
+        "question": "Question 219: A shopkeeper sells a book at a profit of ₹80 which is 5% of its cost price. What is the cost price?",
+        "answer": "Answer: Cost Price = ( frac{Profit}{Profit %} = frac{₹80}{0.05} = ₹1600 )."
+    },
+    {
+        "id": "q220",
+        "question": "Question 220: A retailer offers a 20% discount on a coat marked at ₹2000. What is the sale price?",
+        "answer": "Answer: Sale Price = ( Marked Price - Discount = ₹2000 - 20% times ₹2000 = ₹2000 - ₹400 = ₹1600 )."
+    }
+
+
+
+
+
+
+
+];
+
+        async function fetchQuestions() {
+            // const response = await fetch('data.json');
+            // const data = await response.json();
+            return questionsData;
+        }
+
+        function getRandomQuestions(data, numQuestions) {
+            const shuffled = data.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, numQuestions);
+        }
+
+        function displayQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            questions.forEach(question => {
+                const card = document.createElement('div');
+                const answerButton = document.createElement('button');
+                const answerText = document.createElement('p');
+                
+                card.className = 'card';
+                answerButton.textContent = 'Reveal the Answer';
+                answerText.style.display = 'none';
+                answerText.innerHTML = `${question.answer}`;
+                
+                answerButton.onclick = function() {
+                    const authCode = prompt("Please enter the Authorization code:");
+                    if (authCode === "Jan@2013") {
+                        answerText.style.display = 'block';
+                    } else {
+                        alert("Incorrect Authorization code.");
+                    }
+                };
+                
+                card.innerHTML = `<h3>${question.question}</h3>`;
+                card.appendChild(answerButton);
+                card.appendChild(answerText);
+                container.appendChild(card);
+            });
+        }
+        async function init() {
+            const data = await fetchQuestions();
+            const randomQuestions = getRandomQuestions(data, 5);
+            displayQuestions(randomQuestions);
+        }
+
+        init();
+    </script>
+</body>
+</html>
+
+
+
