@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Challenge</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <div class="container"> 
+    <div class="card">
+      <h2>DMAS</h2> 
+      <div id="problem"></div>
+      <input type="number" id="answer">
+      <button id="submit">Submit</button>
+      <div id="result"></div>
+      <div class="buttons">
+        <button id="next">Next</button>
+        <button id="home">Home</button>
+      </div>
+    </div>
+  </div>
+  <script src="rest_request.js"></script>
+  <script>
+let currentProblem = {};
+
+function generateRandomOperator() {
+  const operators = ['+', '-', '*', '/'];
+  return operators[Math.floor(Math.random() * operators.length)];
+}
+
+function generateProblem() {
+  let expression = '';
+  let result;
+  do {
+    expression = '';
+    result = 0;
+    for (let i = 0; i < 5; i++) {
+      const num = Math.floor(Math.random() * 100) + 1;
+      const operator = generateRandomOperator();
+      expression += (i === 0) ? num : ` ${operator} ${num}`;
+      result = eval(expression);
+    }
+  } while (result <= 0 || !Number.isInteger(result)); // Loop until result is a positive integer
+
+  document.getElementById('problem').textContent = `${expression.replace(/\*/g, 'x').replace(/\//g, '\u00F7')} = ?`;
+  currentProblem = { answer: result };
+  currentProblem.uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  console.log(currentProblem.answer);
+}
+
+function checkAnswer() {
+  const userAnswer = parseInt(document.getElementById('answer').value);
+  const isCorrect = userAnswer === currentProblem.answer;
+  alert(isCorrect ? "Correct!" : "Incorrect!");
+  document.getElementById('result').textContent = isCorrect ? "Correct!" : "Incorrect!";
+  currentProblem.remark = isCorrect ? "Correct!" : "Incorrect!";
+  submitProblemData(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(), userAnswer.toString(), currentProblem.remark)
+  .then(response => response.json())
+  .then(data => console.log('Success:', data))
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+function clearFields() {
+  document.getElementById('answer').value = '';
+  document.getElementById('result').textContent = '';
+}
+
+document.getElementById('submit').addEventListener('click', checkAnswer);
+document.getElementById('next').addEventListener('click', () => {
+  clearFields();
+  generateProblem();
+});
+document.getElementById('home').addEventListener('click', () => window.location.href = 'index.html');
+
+generateProblem(); // Generate the first problem on load
+</script>
+</body>
+</html>
