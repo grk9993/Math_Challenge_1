@@ -5,7 +5,7 @@ buttons.forEach(button => {
       const operation = this.id; 
       const operations = ['addition', 'subtraction', 'multiplication', 'division',
          'lcm', 'hcf', 'roman', 'fraction_addition', 'fraction_subtraction' 
-         , 'decimal_addition', 'decimal_subtraction' , 'percentage'];
+         , 'decimal_addition', 'decimal_subtraction' , 'percentage', 'dmas'];
       if (operations.includes(operation)) {
         window.location.href = operation + '.html'; 
       } else {
