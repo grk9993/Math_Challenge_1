@@ -51,7 +51,7 @@ function checkAnswer() {
   const userAnswer = parseInt(document.getElementById('answer').value);
   const isCorrect = userAnswer === currentProblem.answer;
   alert(isCorrect ? "Correct!" : "Incorrect!");
-  document.getElementById('result').textContent = isCorrect ? "Correct!" : "Incorrect!";
+  //document.getElementById('result').textContent = isCorrect ? "Correct!" : "Incorrect!";
   currentProblem.remark = isCorrect ? "Correct!" : "Incorrect!";
   submitProblemData(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(), userAnswer.toString(), currentProblem.remark)
   .then(response => response.json())

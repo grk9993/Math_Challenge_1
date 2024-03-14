@@ -69,6 +69,7 @@ function gcd(a, b) {
       const resultText = userAnswer === currentProblem.answer ? "Correct!" : "Incorrect!";
 
       submitProblemData(currentProblem.uid, document.getElementById('problem').textContent, currentProblem.answer.toString(), userAnswer.toString(), resultText);
+      alert(resultText);
     }
 
     function clearFields() {
